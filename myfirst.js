@@ -5,7 +5,7 @@ var bRange = 39;
 var eBalls = 1;
 var eBRange = 14;
 //var balls = [numBalls];
-//var extraBalls = [eBalls];
+var extraBalls = [eBalls];
 
 var type = "L";
 //var type = "E";
