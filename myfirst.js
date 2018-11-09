@@ -1,4 +1,5 @@
 var http = require('http');
+//var sys = require('sys');
 //default is "T"
 var numBalls = 5;
 var bRange = 39;
@@ -6,11 +7,23 @@ var eBalls = 1;
 var eBRange = 14;
 //var balls = [numBalls];
 var extraBalls = [eBalls];
+var myNumbers = [numBalls];
 
-var type = "L";
+//var type = "L";
 //var type = "E";
-//var type = "T";
+var type = "T";
 
+function hasDuplicates(array) {
+    var valuesSoFar = Object.create(null);
+    for (var i = 0; i < array.length; ++i) {
+        var value = array[i];
+        if (value in valuesSoFar) {
+            return true;
+        }
+        valuesSoFar[value] = true;
+    }
+    return false;
+}
 
 http.createServer(function(req, res) {
     res.writeHead(200, {
@@ -28,22 +41,30 @@ http.createServer(function(req, res) {
         eBalls = 2;
         eBRange = 12;
     }
-    var mynumbers = [numBalls];
-    for (i = 0; i < numBalls; i++) {
-        num = Math.round(Math.random() * (bRange - 1) + 1);
-        mynumbers[i] = num;
-        console.log(num);
-        res.write(num.toString() + '<br>'); //write a response to the client
-    }
-    res.write('<br>') //write a response to the client
-    console.log("");
-    for (i = 0; i < eBalls; i++) {
-        num = Math.round(Math.random() * (eBRange - 1) + 1);
-        extraBalls[i] = num;
-        console.log(num);
-        res.write(num.toString() + '<br>'); //write a response to the client
-    }
+    do {
+        res.write('<br>');
+        for (i = 0; i < numBalls; i++) {
+            num = Math.round(Math.random() * (bRange - 1) + 1);
+            myNumbers[i] = num;
+            console.log(num);
+            res.write(num.toString() + '<br>'); //write a response to the client
+        }
+    } while (hasDuplicates(myNumbers));
+
+    do {
+        res.write('<br>') //write a response to the client
+        console.log("");
+        for (i = 0; i < eBalls; i++) {
+            num = Math.round(Math.random() * (eBRange - 1) + 1);
+            extraBalls[i] = num;
+            console.log(num);
+            res.write(num.toString() + '<br>'); //write a response to the client
+        }
+    } while (hasDuplicates(extraBalls));
+
+
     res.write('<br>')
     console.log("");
     res.end(); //end the response
-}).listen(8080);
+}).listen(8888);
+console.log('Server running at http://127.0.0.1:8080/');
