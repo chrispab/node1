@@ -1,4 +1,11 @@
 var http = require('http');
+
+
+var express = require('express');
+var bodyParser = require('body-parser');
+var app     = express();
+
+
 //var sys = require('sys');
 //default is "T"
 var numBalls = 5;
@@ -13,6 +20,23 @@ var myNumbers = [numBalls];
 //var type = "E";
 var type = "T";
 
+
+//Note that in version 4 of express, express.bodyParser() was
+//deprecated in favor of a separate 'body-parser' module.
+app.use(bodyParser.urlencoded({ extended: true })); 
+
+//app.use(express.bodyParser());
+
+app.post('/myaction', function(req, res) {
+  res.send('You sent the name "' + req.body.name + '".');
+});
+app.get('/', (req, res) => res.sendfile('index.html'));
+
+app.listen(8080, function() {
+  console.log('Server running at http://127.0.0.1:8080/');
+});
+
+
 function hasDuplicates(array) {
     var valuesSoFar = Object.create(null);
     for (var i = 0; i < array.length; ++i) {
@@ -25,46 +49,47 @@ function hasDuplicates(array) {
     return false;
 }
 
-http.createServer(function(req, res) {
-    res.writeHead(200, {
-        'Content-Type': 'text/html'
-    });
-    if (type == "L") {
-        numBalls = 6;
-        bRange = 59;
-        eBalls = 0;
-        eBRange = 0;
-    }
-    if (type == "E") {
-        numBalls = 5;
-        bRange = 50;
-        eBalls = 2;
-        eBRange = 12;
-    }
-    do {
-        res.write('<br>');
-        for (i = 0; i < numBalls; i++) {
-            num = Math.round(Math.random() * (bRange - 1) + 1);
-            myNumbers[i] = num;
-            console.log(num);
-            res.write(num.toString() + '<br>'); //write a response to the client
-        }
-    } while (hasDuplicates(myNumbers));
 
-    do {
-        res.write('<br>') //write a response to the client
-        console.log("");
-        for (i = 0; i < eBalls; i++) {
-            num = Math.round(Math.random() * (eBRange - 1) + 1);
-            extraBalls[i] = num;
-            console.log(num);
-            res.write(num.toString() + '<br>'); //write a response to the client
-        }
-    } while (hasDuplicates(extraBalls));
+// http.createServer(function(req, res) {
+//     res.writeHead(200, {
+//         'Content-Type': 'text/html'
+//     });
+//     if (type == "L") {
+//         numBalls = 6;
+//         bRange = 59;
+//         eBalls = 0;
+//         eBRange = 0;
+//     }
+//     if (type == "E") {
+//         numBalls = 5;
+//         bRange = 50;
+//         eBalls = 2;
+//         eBRange = 12;
+//     }
+//     do {
+//         res.write('<br>');
+//         for (i = 0; i < numBalls; i++) {
+//             num = Math.round(Math.random() * (bRange - 1) + 1);
+//             myNumbers[i] = num;
+//             console.log(num);
+//             res.write(num.toString() + '<br>'); //write a response to the client
+//         }
+//     } while (hasDuplicates(myNumbers));
+
+//     do {
+//         res.write('<br>') //write a response to the client
+//         console.log("");
+//         for (i = 0; i < eBalls; i++) {
+//             num = Math.round(Math.random() * (eBRange - 1) + 1);
+//             extraBalls[i] = num;
+//             console.log(num);
+//             res.write(num.toString() + '<br>'); //write a response to the client
+//         }
+//     } while (hasDuplicates(extraBalls));
 
 
-    res.write('<br>')
-    console.log("");
-    res.end(); //end the response
-}).listen(8888);
+//     res.write('<br>')
+//     console.log("");
+//     res.end(); //end the response
+//}).listen(8888);
 console.log('Server running at http://127.0.0.1:8080/');

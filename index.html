@@ -3,24 +3,28 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>CSS3 Contact Form</title>
+    <title>Game selection</title>
 </head>
 
 <body>
     <div id="contact">
-        <h1>Send an email</h1>
-        <form action="/myaction" method="post">
+        <h1>Select</h1>
+        <form action="http://127.0.0.1:8080/myaction" method="post">
             <fieldset>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter your full name" />
+                <label for="gametype">Game Type:</label><br>
+                <!-- <input type="radio" id="name" name="name" placeholder="Enter your full name" /> -->
+                <input type="radio" name="gametype" value="L" checked>Lottery<br>
+                <input type="radio" name="gametype" value="T">Thunderball<br>
+                <input type="radio" name="gametype" value="E">Euromillions
 
-                <label for="email">Email:</label>
+                <br>
+                <!-- <label for="email">Email:</label>
                 <input type="email" id="email" placeholder="Enter your email address" />
 
                 <label for="message">Message:</label>
-                <textarea id="message" placeholder="What's on your mind?"></textarea>
+                <textarea id="message" placeholder="What's on your mind?"></textarea> -->
 
-                <input type="submit" value="Send message" />
+                <input type="submit" value="Pick" />
 
             </fieldset>
         </form>
